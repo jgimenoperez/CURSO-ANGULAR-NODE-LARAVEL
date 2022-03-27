@@ -13,3 +13,6 @@ https://www.digitalocean.com/community/tutorials/how-to-install-linux-nginx-mysq
 https://www.digitalocean.com/community/books/sysadmin-ebook-making-servers-work-de-es
 https://github.com/do-community/travellist-laravel-demo
 https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-ubuntu-20-04-es
+
+Crear un controlador.
+php artisan make:controller PruebasController
