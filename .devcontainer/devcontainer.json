@@ -2,7 +2,7 @@
 	"name": "PHP NGINX MARAIADB LARAVEL",
 	"dockerComposeFile": "../docker-compose.yml",
 	"service": "phpfpm",
-	"workspaceFolder": "/var/www",
+	"workspaceFolder": "/phpApp",
 	"shutdownAction": "stopCompose",	
 	"settings": { 
 		"terminal.integrated.shell.linux": "/bin/bash",

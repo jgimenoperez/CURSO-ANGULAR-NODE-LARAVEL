@@ -9,10 +9,11 @@ services:
         volumes:
             # - ./html:/usr/share/nginx/html
             - ./php:/usr/local/etc/php
-            - ./www:/var/www                     
+            - ./www:/var/www       
+            - ./:/phpApp            
         networks:
             - network_lemp       
-        working_dir: /var/www/
+        working_dir: /phpApp/
     
         # environment:
         #   - MONGO_URI=mongodb://mongo:27017/fruits

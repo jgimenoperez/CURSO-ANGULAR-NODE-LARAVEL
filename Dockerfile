@@ -9,7 +9,7 @@ RUN HASH=`curl -sS https://composer.github.io/installer.sig`
 RUN php -r "if (hash_file('SHA384', 'composer-setup.php') === '$HASH') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
 RUN php /home/docker/composer-setup.php --install-dir=/usr/local/bin --filename=composer
 # RUN chmod -R ugo+rw api-rest-laravel/storage/
-WORKDIR /var/www
+WORKDIR /phpApp
 # COPY . /www
 # RUN apt-get install nginx -y
 # RUN service nginx start
