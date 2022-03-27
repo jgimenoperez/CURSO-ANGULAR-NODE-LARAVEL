@@ -25,7 +25,7 @@
 	// "forwardPorts": [27017],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": ["chmod -R ugo+rw api-rest-laravel/storage/"]
+	"postCreateCommand": ["chmod -R ugo+rw api-rest-laravel/storage/","git config core.hookspath .githooks && yarn install"]
 	// ,"git config core.hookspath .githooks && yarn install"
 
 }
