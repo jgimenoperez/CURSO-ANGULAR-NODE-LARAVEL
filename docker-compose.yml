@@ -1,0 +1,125 @@
+version: '3.7'
+
+services:
+    phpfpm:
+        container_name: phpfpm
+        build: .
+        ports:
+            - "9000:9000"
+        volumes:
+            # - ./html:/usr/share/nginx/html
+            - ./php:/usr/local/etc/php
+            - ./www:/var/www                     
+        networks:
+            - network_lemp       
+        working_dir: /var/www/
+    
+        # environment:
+        #   - MONGO_URI=mongodb://mongo:27017/fruits
+        #   - PORT=3000
+        #   - NODE_ENV=development
+
+        # depends_on:
+        #   - mongo
+        # volumes:
+        #   - .vscode:/api/.vscode
+        #ports: ["8080:80"]
+        # volumes:
+        # - ./nginx/default:/etc/nginx/sites-available/default
+        # - ./nginx/default:/etc/nginx/sites-enabled/default
+        # - "./pages:/var/www/html"
+    #         - .html:/usr/share/nginx/html     
+        tty: true 
+
+
+    nginx:
+        image: tutum/nginx
+        container_name: nginx-devcontainer
+        ports:
+            - "8080:80"
+        links:
+            - phpfpm
+        volumes:
+            - ./nginx/default:/etc/nginx/sites-available/default
+            - ./nginx/default:/etc/nginx/sites-enabled/default
+            # - ./html:/usr/share/nginx/html
+            - ./www:/var/www
+        networks:
+            network_lemp:         
+                aliases:
+                    - nginx-devcontainer  
+            # Para permiter acceso envio de ficheros de mas tamaño añadir la linea
+            # client_max_body_size 100M;
+            # en /etc/nginx/nginx.conf
+            # https://www.hostinger.es/tutoriales/solucionar-error-413-request-entity-too-large/
+
+            # php-fpm //Convierte el php a html      
+            # He tenido problemas con otras imagenes por que no tienen habilidado el sqlcli que es el servicio para php que conecta con la bd
+            # Usar stonewaves/php-fpm-mysql:latest
+    # phpfpm:
+    #     image: dockerlemp:latest
+    #     #image: stonewaves/php-fpm-mysql:latest
+    #     container_name: phpfpm-devcontainer
+    #     ports:
+    #         - "9000:9000"
+    #     volumes:
+    #         # - ./public:/usr/share/nginx/html     
+    #         # - ./html:/usr/share/nginx/html
+    #         - ./html:/usr/share/nginx/html
+    #         - ./php:/usr/local/etc/php   
+    #     networks:
+    #         - network_lemp  
+
+        # Me ha ocurrido en el equiop de la ofi que el mysqli no fuciona por defecto
+        # he añadido la carpeta /usr/local/etc/php/conf.d
+        # Dentro he creado el fichero  docker-php-ext-mysqli.ini
+        # con la info    extension=mysqli.so
+        # Otra solucion Es
+        # En ubuntu necesitamos descomentar esta línea en php.ini que se encuentra en /etc/php/7.0/Apache2/php.ini
+        # extensión = php_mysqli.so
+        # https://www.it-swarm-es.com/es/php/como-habilitar-la-extension-mysqli-en-php-7/824260566/
+
+        #Otra cosa mas para hacer funcionar PDO he tenido que instalar esto docker-php-ext-install pdo pdo_mysql zip
+        # RUN apt-get update \
+        # && apt-get install -y git zlib1g-dev \
+        # && docker-php-ext-install pdo pdo_mysql zip
+
+        # Mas infor acerca de esto
+        # https://hub.docker.com/_/php
+
+        # Cómo instalar más extensiones PHP
+        # Muchas extensiones ya están compiladas en la imagen, por lo que vale la pena verificar el resultado de php -mo php -iantes de realizar el esfuerzo de compilar más.
+        
+        # Proporcionamos los scripts de ayuda docker-php-ext-configure, docker-php-ext-instally docker-php-ext-enablepara instalar más fácilmente extensiones PHP.
+        
+        # Para mantener las imágenes más pequeñas, la fuente de PHP se mantiene en un archivo tar comprimido. Para facilitar la vinculación de la fuente de PHP con cualquier extensión, también proporcionamos el script auxiliar docker-php-sourcepara extraer fácilmente el archivo tar o eliminar la fuente extraída. Nota: si usa docker-php-sourcepara extraer la fuente, asegúrese de eliminarla en la misma capa de la imagen de la ventana acoplable.
+        
+        # FROM php:7.4-cli
+        # RUN docker-php-source extract \
+        #     # do important things \
+        #     && docker-php-source delete
+
+            # He tenido problemas de autenticacion de usuario desde php con mysql.
+            # Con mariadb todo ok        
+            # uso alias maria_lemp para conectar por nombre y no por ip 
+
+            #mosrtar modulos instalados
+            # php -m
+
+            #Habiliar modulos gd para tratamiento de imagenes
+            # apt-get update && apt-get install -y         libfreetype6-dev         libjpeg62-turbo-dev         libpng-dev
+            # docker-php-ext-configure gd --with-freetype-dir=/usr/lib --with-png-dir=/usr/lib --with-jpeg-dir=/usr/lib && \ docker-php-ext-install gd        
+            # https://www.gitmemory.com/issue/docker-library/php/913/560148532        
+        
+            #con php instalar extension gd
+        #     FROM php:7.4-fpm
+        # RUN apt-get update && apt-get install -y \
+        #         libfreetype6-dev \
+        #         libjpeg62-turbo-dev \
+        #         libpng-dev \
+        #     && docker-php-ext-configure gd --with-freetype --with-jpeg \
+        #     && docker-php-ext-install -j$(nproc) gd
+
+networks:
+    network_lemp:
+    

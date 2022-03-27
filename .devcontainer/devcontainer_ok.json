@@ -1,0 +1,33 @@
+{
+	"name": "PHP NGINX MARAIADB LARAVEL",
+	"dockerComposeFile": "../docker-compose.yml",
+	"service": "dev-php",
+	"workspaceFolder": "/www",
+	"shutdownAction": "stopCompose",	
+	"settings": { 
+		"terminal.integrated.shell.linux": "/bin/bash",
+        "editor.fontSize": 18,
+        "editor.formatOnSave": true,
+        "workbench.colorTheme": "Default Dark+",
+        "workbench.iconTheme": "material-icon-theme"
+
+	},
+
+	// Add the IDs of extensions you want installed when the container is created.
+	"extensions": [
+		"dbaeumer.vscode-eslint",
+		"esbenp.prettier-vscode",
+		"eamodio.gitlens",
+		"mhutchie.git-graph"
+	],
+
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// "forwardPorts": [27017],
+
+	// Use 'postCreateCommand' to run commands after the container is created.
+	"postCreateCommand": "git config core.hookspath .githooks && yarn install",
+
+}
+
+// Lista todas las extensiones
+// code --list-extensionsc
