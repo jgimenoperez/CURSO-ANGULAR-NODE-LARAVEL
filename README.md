@@ -16,3 +16,12 @@ https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-ubunt
 
 Crear un controlador.
 php artisan make:controller PruebasController
+
+Crear un modelo
+php artisan make:model Post
+
+Crear un controlador
+php artisan  make:controller UserController
+
+Lista rutas
+php artisan route:list

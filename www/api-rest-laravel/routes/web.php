@@ -33,6 +33,9 @@ Route::get('/test-orm',[PruebasController::class,'textOrm']);
 
 //rutas del api
 Route::get('/usuario/pruebas',[UserController::class,'pruebas']);
-Route::get('/category/pruebas',[CategoryController::class,'pruebas']);
-Route::get('/post/pruebas',[PostController::class,'pruebas']);
+Route::post('/api/register',[UserController::class,'register']);
+Route::post('/api/login',[UserController::class,'login']);
+
+// Route::get('/category/pruebas',[CategoryController::class,'pruebas']);
+// Route::get('/post/pruebas',[PostController::class,'pruebas']);
 

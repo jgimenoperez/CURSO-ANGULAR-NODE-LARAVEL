@@ -6,9 +6,9 @@
 	"shutdownAction": "stopCompose",	
 	"settings": { 
 		"terminal.integrated.shell.linux": "/bin/bash",
-        "editor.fontSize": 18,
+        // "editor.fontSize": 18,
         "editor.formatOnSave": true,
-        "workbench.colorTheme": "Default Dark+",
+        "workbench.colorTheme": "Red",
         "workbench.iconTheme": "material-icon-theme"
 
 	},

@@ -31,7 +31,22 @@ services:
         # - "./pages:/var/www/html"
     #         - .html:/usr/share/nginx/html     
         tty: true 
-
+    mysql:
+        image: mariadb
+        container_name: maria_lemp_container
+        ports:
+            - "3307:3306" 
+        environment:
+            MYSQL_ROOT_PASSWORD: root   
+            MYSQL_USER: chan
+            MYSQL_PASSWORD: 961421180   
+            MYSQL_DATABASE: api_rest_laravel
+        volumes:
+            - C:\DEVLAB\BBDD\mariadb:/var/lib/mysql              
+        networks:
+            network_lemp:         
+                aliases:
+                    - maria_lemp_container
 
     nginx:
         image: tutum/nginx
