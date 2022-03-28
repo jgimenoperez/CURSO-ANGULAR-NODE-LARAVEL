@@ -2,7 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PruebasController;
-
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\PostController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -27,4 +29,10 @@ Route::get('/pruebas/{nombre?}', function ($nombre=null) {
 });
 
 Route::get('/animales',[PruebasController::class,'index']);
+Route::get('/test-orm',[PruebasController::class,'textOrm']);
+
+//rutas del api
+Route::get('/usuario/pruebas',[UserController::class,'pruebas']);
+Route::get('/category/pruebas',[CategoryController::class,'pruebas']);
+Route::get('/post/pruebas',[PostController::class,'pruebas']);
 
