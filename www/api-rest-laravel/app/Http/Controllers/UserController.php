@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Helpers\JwtAuth;
 
 class UserController extends Controller
 {
@@ -51,8 +52,9 @@ class UserController extends Controller
 
         }else{
             //cifrar la contraseña
-            // $pwd=hash('sha256',$params->password);
-            $pwd=password_hash($params->password,PASSWORD_BCRYPT,['cost'=>4]);
+            $pwd=hash('sha256',$params->password);
+            //$pwd=password_hash($params->password,PASSWORD_BCRYPT,['cost'=>4]);
+
 
             //comproabar si el usuario existe
             // $user=\App\User::where('email',$params_array['email'])->first();
@@ -87,6 +89,13 @@ class UserController extends Controller
     }
 
     public function login(Request $request){
-        return "Login user";
-    }
+
+        $jwtAuth=new JwtAuth();
+       
+        $email=$request->input('email');
+        $password=hash('sha256',$request->input('password'));
+        
+        return $jwtAuth->autenticar($email,$password);
+
+}
 }
