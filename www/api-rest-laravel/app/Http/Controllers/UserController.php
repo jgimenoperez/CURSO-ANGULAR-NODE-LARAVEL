@@ -137,10 +137,64 @@ class UserController extends Controller
     }
 
     public function update(Request $request){
+        //comprobar identfiicac
         $token = $request->header('Authorization');
         $jwtAuth=new JwtAuth();
         $checkToken=$jwtAuth->checkToken($token);
-        return response()->json($checkToken,200);
+        //actualizar usuario
+        if($checkToken){
+            //recoger datos por post
+            $json=$request->input('json',null);
+            $params=json_decode($json);
+            $params_array=json_decode($json,true);
+
+            // //obterner usuario identificado
+            $user=$jwtAuth->checkToken($token,true);
+            // //validar datos
+            $validate=\Validator::make($params_array,[
+                'name'=>'required|alpha',
+                'surname'=>'required|alpha',
+                'email' => 'required|email|unique:users,email,'.$user->sub
+            ]);
+            // //quitar campos que no quiero actualizar
+            unset($params_array['id']);
+            unset($params_array['role']);
+            unset($params_array['password']);
+            unset($params_array['created_at']);
+            unset($params_array['remember_token']);
+            // //actualizar usuario en bbdd
+            // $user_update=User::where('id',$user->sub)->update($params_array);
+            
+            if($validate->fails()){
+                $data= array(
+                    'code' => 404,
+                    'status' => 'error',
+                    'message' => 'El usuario no se ha actualizado',
+                    'errors' => $validate->errors()
+                );
+
+            }else{
+                // //actualizar usuario en bbdd
+                $user_update=User::where('id',$user->sub)->update($params_array);
+                $data= array(
+                    'code' => 200,
+                    'status' => 'success',
+                    'message' => 'El usuario se ha actualizado correctamente',
+                    'usuario' => $user,
+                    'changes' => $params_array
+                );
+            }
+
+            
+        }else {
+            $data= array(
+                'code' => 400,
+                'status' => 'error',
+                'message' => 'El usuario no se ha actualizado',
+                'errors' => 'El usuario no se ha actualizado'
+            );
+        }
+        return response()->json($data,$data['code']);
         
     }
 }
