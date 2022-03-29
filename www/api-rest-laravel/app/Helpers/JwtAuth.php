@@ -10,7 +10,7 @@ use App\Models\User;
 class JwtAuth{
 
     //buscar usuario por contraseña 
-    public static function autenticar($email,$password,$getToken = null){
+    public static function signup($email,$password,$getToken = null){
 
         $user=User::where([
             'email'=>$email,
@@ -33,7 +33,7 @@ class JwtAuth{
 
             //decodificar token
             $decoded = JWT::decode($token, new Key('clave-secreta', 'HS256'));
-
+            
             if (is_null($getToken)) {
                  $data=$token;
             }else{
@@ -53,6 +53,29 @@ class JwtAuth{
         return $data;
     }
 
+    //comprobar token
+    public static function checkToken($jwt,$getIdentity = false){
+        $auth=false;
+        try{
+            $decoded = JWT::decode($jwt, new Key('clave-secreta', 'HS256'));
+        }catch(\UnexpectedValueException $e){
+            $auth=false;
+        }catch(\DomainException $e){
+            $auth=false;
+        }
+
+        if(!empty($decoded) && is_object($decoded) && isset($decoded->sub)){
+            $auth=true;
+        }else{
+            $auth=false;
+        }
+
+        if($getIdentity){
+            return $decoded;
+        }else{
+            return $auth;
+        }
+    }
 
 }
 

@@ -89,13 +89,58 @@ class UserController extends Controller
     }
 
     public function login(Request $request){
-
-        $jwtAuth=new JwtAuth();
-       
-        $email=$request->input('email');
-        $password=hash('sha256',$request->input('password'));
         
-        return $jwtAuth->autenticar($email,$password);
+        $jwtAuth=new JwtAuth();
+       //recoger datos
+       $json=$request->input('json',null);
+       $params=json_decode($json);
+       $params_array=json_decode($json,true);
 
-}
+        //limpiar datos
+        $params_array=array_map('trim',$params_array);
+
+        //validate data
+        if(empty($params_array)){
+            $data=array(
+                'status'=>'error',
+                'code'=>400,
+                'message'=>'Los datos estan vacios'
+            );
+        }        
+ 
+        //validate data
+        $validate=\Validator::make($params_array,[
+            'password'=>'required',
+            'email'=>'required|email'
+        ]);
+        if($validate->fails()){
+            $data= array(
+                'code' => 404,
+                'status' => 'error',
+                'message' => 'El usuario no se ha podido identificar',
+                'errors' => $validate->errors()
+            );
+        }else{
+            $email=$params->email;
+            $password=hash('sha256',$params->password);
+            if  (!empty($params->gettoken)){
+                $signup=$jwtAuth->signup($email,$password,true);
+            }else{
+                $signup=$jwtAuth->signup($email,$password);
+            }
+        }
+        return response()->json($signup,200);
+
+
+ 
+ 
+    }
+
+    public function update(Request $request){
+        $token = $request->header('Authorization');
+        $jwtAuth=new JwtAuth();
+        $checkToken=$jwtAuth->checkToken($token);
+        return response()->json($checkToken,200);
+        
+    }
 }
