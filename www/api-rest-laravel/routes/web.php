@@ -5,6 +5,7 @@ use App\Http\Controllers\PruebasController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PostController;
+use App\Http\Middleware\ApiAuthMiddleware;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -36,6 +37,9 @@ Route::get('/usuario/pruebas',[UserController::class,'pruebas']);
 Route::post('/api/register',[UserController::class,'register']);
 Route::post('/api/login',[UserController::class,'login']);
 Route::put('/api/user/update',[UserController::class,'update']);
+Route::post('/api/user/upload',[UserController::class,'upload'])->middleware(\ApiAuthMiddleware::class);
+Route::get('/api/user/avatar/{filename}',[UserController::class,'getImage']);
+Route::get('/api/user/detail/{id}',[UserController::class,'detail']);
 
 // Route::get('/category/pruebas',[CategoryController::class,'pruebas']);
 // Route::get('/post/pruebas',[PostController::class,'pruebas']);

@@ -25,3 +25,9 @@ php artisan  make:controller UserController
 
 Lista rutas
 php artisan route:list
+
+Crear Middelware
+php artisan make:middleware ApiAuthMiddleware
+
+Configurar array de discos
+filesystems.php
