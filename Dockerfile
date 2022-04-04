@@ -1,5 +1,7 @@
 FROM dockerlemp:latest
 RUN apt-get update &&  apt-get -y install sudo &&  apt-get -y install nodejs &&  apt-get -y install npm 
+RUN npm install -g npm@latest && npm cache clean --force && npm set audit false && npm install -g @angular/cli
+RUN npm install -g n && n stable
 RUN useradd -m docker && echo "docker:docker" | chpasswd && adduser docker sudo
 USER root
 # RUN apt install php-cli unzip -y

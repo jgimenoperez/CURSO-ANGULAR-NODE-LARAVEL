@@ -31,3 +31,8 @@ php artisan make:middleware ApiAuthMiddleware
 
 Configurar array de discos
 filesystems.php
+
+
+///ANGULAR
+ng new---crea nuevo proyecto
+ng serve---monta server
