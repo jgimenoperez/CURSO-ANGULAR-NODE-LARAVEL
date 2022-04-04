@@ -41,6 +41,15 @@ Route::post('/api/user/upload',[UserController::class,'upload'])->middleware(\Ap
 Route::get('/api/user/avatar/{filename}',[UserController::class,'getImage']);
 Route::get('/api/user/detail/{id}',[UserController::class,'detail']);
 
-// Route::get('/category/pruebas',[CategoryController::class,'pruebas']);
-// Route::get('/post/pruebas',[PostController::class,'pruebas']);
+//Categorias
+Route::resource('/api/category', CategoryController::class);
+//Route::put('/api/category/{id}',[CategoryController::class,'update']);
+
+//Rutas controlador post
+Route::resource('/api/post', PostController::class);
+Route::post('/api/post/upload',[PostController::class,'upload']);
+Route::get('/api/post/imagen/{filename}',[PostController::class,'getImage']);
+Route::get('/api/post/category/{id}',[PostController::class,'getPostsByCategory']);
+Route::get('/api/post/user/{id}',[PostController::class,'getPostsByUser']);
+
 

@@ -10,6 +10,9 @@ class Post extends Model
     use HasFactory;
 
     protected $table = 'posts';
+    protected $fillable = [
+        'id','user_id','category_id','title','content','image','status'
+    ];
 
     //relacion de muchos a uno
 
