@@ -36,3 +36,4 @@ filesystems.php
 ///ANGULAR
 ng new---crea nuevo proyecto
 ng serve---monta server
+ng g component components/nombrecomponent
