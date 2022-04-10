@@ -45,7 +45,6 @@ class UserController extends Controller
         ]);
 
         if ($validate->fails()) {
-
             $data = array(
                 'code' => 404,
                 'status' => 'error',
@@ -79,7 +78,7 @@ class UserController extends Controller
             );
         }
 
-        return response()->json($data, 400);
+        return response()->json($data, $data['code']);
 
 
         $datos = [
