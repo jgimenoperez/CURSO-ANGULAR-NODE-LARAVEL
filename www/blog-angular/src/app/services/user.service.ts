@@ -13,6 +13,7 @@ import { Global } from './global';
 export class UserService {
 
     public url:string;
+    
 
     constructor(
             public _http:HttpClient
@@ -29,6 +30,18 @@ export class UserService {
             let params = "json="+json;
             let headers = new HttpHeaders().set('Content-Type','application/x-www-form-urlencoded');
             return this._http.post(this.url+'register',params,{headers:headers});
+        }
+        //login the user
+        login(user:any, gettoken = null):Observable<any>{
+            if(gettoken != null){
+                user.gettoken = "true";
+            }
+            console.log(3)
+            let json = JSON.stringify(user);
+            let params = "json="+json;
+   
+            let headers = new HttpHeaders().set('Content-Type','application/x-www-form-urlencoded');
+            return this._http.post(this.url+'login',params,{headers:headers});
         }
 
 }

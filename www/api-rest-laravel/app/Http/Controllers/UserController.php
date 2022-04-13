@@ -132,8 +132,17 @@ class UserController extends Controller
             } else {
                 $signup = $jwtAuth->signup($email, $password);
             }
+
+            $data = array(
+                'code' => 200,
+                'status' => 'success',
+                'message' => 'El usuario se ha identificado correctamente',
+                'token' => $signup,
+                'errors' => $validate->errors()
+            );
+
         }
-        return response()->json($signup, 200);
+        return response()->json($data, $data['code']);
     }
 
     public function update(Request $request)

@@ -11,7 +11,7 @@ class JwtAuth{
 
     //buscar usuario por contraseña 
     public static function signup($email,$password,$getToken = null){
-
+        
         $user=User::where([
             'email'=>$email,
             'password'=>$password
@@ -30,7 +30,7 @@ class JwtAuth{
                 'clave-secreta',
                 'HS256'
             );
-
+            
             //decodificar token
             $decoded = JWT::decode($token, new Key('clave-secreta', 'HS256'));
             

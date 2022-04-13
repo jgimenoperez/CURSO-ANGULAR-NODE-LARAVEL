@@ -1,4 +1,27 @@
-<h1>
-    {{page_title}}
-</h1>
-<p>login works!</p>
+<div class="col-md12 mt-3">
+    <h1>
+        {{page_title}}
+    </h1>
+    <p>Identificate en la plataforma</p>
+    <!-- crerar un formulario bootstrap -->
+    <form class="col-md-5 ml-o pl-0" (ngSubmit)="onSubmit(loginForm)" #loginForm="ngForm">
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" name="email" class="form-control" #email="ngModel" [(ngModel)]="user.email"
+                required pattern="^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$">
+            <small *ngIf="!email.valid && email.touched" class="invalid-feedback d-block">
+                El email es requerido
+            </small>
+        </div>
+        <div class="form-group">
+            <label for="password">Contraseña:</label>
+            <input type="password" name="password" class="form-control" #password="ngModel" [(ngModel)]="user.password"
+                required>
+            <small *ngIf="!password.valid && password.touched" class="invalid-feedback d-block">
+                El password es requerido
+            </small>
+        </div>
+        <input type="submit" value="Identificarse" class="btn btn-success mt-2" [disabled]="loginForm.invalid">
+    </form>
+    
+</div>
