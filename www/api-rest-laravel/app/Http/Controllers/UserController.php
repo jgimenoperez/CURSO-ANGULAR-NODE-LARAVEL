@@ -128,18 +128,18 @@ class UserController extends Controller
             $email = $params->email;
             $password = hash('sha256', $params->password);
             if (!empty($params->gettoken)) {
-                $signup = $jwtAuth->signup($email, $password, true);
+                $data = $jwtAuth->signup($email, $password, true);
             } else {
-                $signup = $jwtAuth->signup($email, $password);
+                $data = $jwtAuth->signup($email, $password);
             }
-
-            $data = array(
-                'code' => 200,
-                'status' => 'success',
-                'message' => 'El usuario se ha identificado correctamente',
-                'token' => $signup,
-                'errors' => $validate->errors()
-            );
+           
+            // $data = array(
+            //     'code' => 200,
+            //     'status' => 'success',
+            //     'message' => 'El usuario se ha identificado correctamente',
+            //     'userdata' => $signup,
+            //     'errors' => $validate->errors()
+            // );
 
         }
         return response()->json($data, $data['code']);

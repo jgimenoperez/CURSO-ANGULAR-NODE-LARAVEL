@@ -35,16 +35,29 @@ class JwtAuth{
             $decoded = JWT::decode($token, new Key('clave-secreta', 'HS256'));
             
             if (is_null($getToken)) {
-                 $data=$token;
+                $data = array(
+                    'status' => 'success',
+                    'code' => 202,
+                    'message' => 'El usuario se ha identificado correctamente',
+                    'email' => $email,
+                    'token' => $token
+                );
+                //  $data=$token;
             }else{
-                $data=$decoded;            
+                // $data=$decoded;  
+                $data = array(
+                    'status' => 'success',
+                    'code' => 202,
+                    'message' => 'El usuario se ha identificado correctamente',
+                    'data' => $decoded
+                );          
             }
             
         }else{
             $data = array(
                 'status' => 'error',
                 'code' => 404,
-                'message' => 'El usuario no se ha podido identificar',
+                'message' => 'El usuario no se ha podido identificarwwww',
                 'email' => $email,
                 'password' => $password
             );

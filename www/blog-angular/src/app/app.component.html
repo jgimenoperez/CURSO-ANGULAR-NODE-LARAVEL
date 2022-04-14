@@ -17,30 +17,30 @@
                         <a class="nav-link" href="#">Categorias</a>
                     </li>
                 </ul>
-                <ul class="navbar-nav navbar-right">
+                <ul class="navbar-nav navbar-right" *ngIf="!identity">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" [routerLink]="['/inicio']">Login</a>
+                        <a class="nav-link active" aria-current="page" [routerLink]="['/login']">Login</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" aria-current="page" [routerLink]="['/registro']">Registro</a>
                     </li>
                 </ul>
 
-                <ul class="navbar-nav navbar-right mb-2 mb-lg-0">
+                <ul class="navbar-nav navbar-right mb-2 mb-lg-0" *ngIf="identity && identity.name">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
-                            Nombre usuario
+                            {{identity.name + ' '  + identity.surname}}
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <li><a class="dropdown-item" href="#">Crear Entrada</a></li>
-                            <li><a class="dropdown-item" href="#">Creare Categoria</a></li>
+                            <li><a class="dropdown-item" href="#">Crear Categoria</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
                             <li><a class="dropdown-item" href="#">Mi perfil</a></li>
                             <li><a class="dropdown-item" href="#">Ajustes</a></li>
-                            <li><a class="dropdown-item" href="#">Salir</a></li>
+                            <li><a class="dropdown-item" [routerLink]="['/logout/1']">Salir</a></li>
                         </ul>
                     </li>
                 </ul>

@@ -13,6 +13,8 @@ import { Global } from './global';
 export class UserService {
 
     public url:string;
+    public identity:string|null=null;
+    public token:string|null=null;
     
 
     constructor(
@@ -32,16 +34,40 @@ export class UserService {
             return this._http.post(this.url+'register',params,{headers:headers});
         }
         //login the user
-        login(user:any, gettoken = null):Observable<any>{
-            if(gettoken != null){
-                user.gettoken = "true";
-            }
-            console.log(3)
+        login(user:any, gettoken:any = null):Observable<any>{
+            
+            user.gettoken = gettoken;
+        
             let json = JSON.stringify(user);
             let params = "json="+json;
    
             let headers = new HttpHeaders().set('Content-Type','application/x-www-form-urlencoded');
             return this._http.post(this.url+'login',params,{headers:headers});
+
+
+        }
+
+        //obtener identidad
+        getIdentity(){
+            // let identity = JSON.parse(localStorage.getItem('identity')||);
+            let identity = localStorage.getItem('identity')
+
+            if(identity && identity != 'undefined'){
+                this.identity = JSON.parse(localStorage.getItem('identity') || '{}');
+            }else{
+                this.identity = null;
+            }
+            return this.identity;
+        }
+        //obtener token
+        getToken(){
+            let token = localStorage.getItem('token');
+            if(token && token != 'undefined'){
+                this.token = token;
+            }else{
+                this.token = null;
+            }
+            return this.token;
         }
 
 }
